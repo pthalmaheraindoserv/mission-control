@@ -1,0 +1,2 @@
+import TelegramBot from 'node-telegram-bot-api';
+export function startTelegram(io,execute){const token=process.env.TELEGRAM_BOT_TOKEN;if(!token)return;const bot=new TelegramBot(token,{polling:true});bot.on('message',async m=>{if(!m.text)return;try{const r=await execute(io,m.text);await bot.sendMessage(m.chat.id,r.final.slice(0,4000));}catch(e){await bot.sendMessage(m.chat.id,`Error: ${e.message}`)}});console.log('Telegram bot aktif');}
